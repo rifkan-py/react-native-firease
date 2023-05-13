@@ -1,6 +1,3 @@
-// react
-import { useState } from "react";
-
 // screens
 import Home from "./screens/Home";
 import Login from "./screens/Login";
