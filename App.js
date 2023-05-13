@@ -1,10 +1,6 @@
 // react
 import { useState } from "react";
 
-// expo
-import * as Font from "expo-font";
-import { AppLoading } from "expo";
-
 // screens
 import Home from "./screens/Home";
 import Login from "./screens/Login";
@@ -19,11 +15,5 @@ const getFonts = () =>
   });
 
 export default function App() {
-  const [fontsLoaded, setFontsLoaded] = useState(false);
-
-  fontsLoaded ? (
-    <Home />
-  ) : (
-    <AppLoading startAsync={getFonts} onFinish={() => setFontsLoaded(true)} />
-  );
+  return <Home />;
 }
