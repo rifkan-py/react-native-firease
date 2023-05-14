@@ -7,26 +7,58 @@ import {
   View,
 } from "react-native";
 
-const Login = () => {
-  const handlePress = () => {
-    Alert.alert("Invalid Credential", "Please enter correct email or password");
+import { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase/config";
+
+const Login = ({ navigation }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { authUser } = useContext(AuthContext);
+
+  const handlePress = async () => {
+    try {
+      setLoading(true);
+      await signInWithEmailAndPassword(auth, email, password);
+      navigation.navigate("Home");
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      Alert.alert("Error", "Invalid credential");
+    }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sign in</Text>
-      <TextInput placeholder="EMAIL" style={styles.input} />
+      <TextInput
+        placeholder="EMAIL"
+        style={styles.input}
+        value={email}
+        onChangeText={(val) => setEmail(val)}
+      />
       <TextInput
         placeholder="PASSWORD"
         secureTextEntry={true}
         style={styles.input}
+        value={password}
+        onChangeText={(val) => setPassword(val)}
       />
-      <TouchableOpacity style={styles.button} onPress={handlePress}>
-        <Text style={styles.buttonText}>Submit</Text>
+      <TouchableOpacity
+        style={[styles.button, loading && styles.loadingButton]}
+        onPress={handlePress}
+      >
+        {loading ? (
+          <Text style={styles.buttonText}>Loading...</Text>
+        ) : (
+          <Text style={styles.buttonText}>Submit</Text>
+        )}
       </TouchableOpacity>
       <View style={styles.registerLinkContainer}>
         <Text>New to this app ? </Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Register")}>
           <Text style={styles.linkText}>Register</Text>
         </TouchableOpacity>
       </View>
@@ -79,6 +111,9 @@ const styles = StyleSheet.create({
   linkText: {
     fontWeight: "bold",
     color: "#007AFF",
+  },
+  loadingButton: {
+    opacity: 0.7,
   },
 });
 

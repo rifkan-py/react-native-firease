@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native";
 
-const Register = () => {
+const Register = ({ navigation }) => {
   const handlePress = () => {
     Alert.alert("Invalid Credential", "Please enter correct email or password");
   };
@@ -32,7 +32,7 @@ const Register = () => {
       </TouchableOpacity>
       <View style={styles.loginLinkContainer}>
         <Text>New to this app ? </Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Text style={styles.linkText}>Login</Text>
         </TouchableOpacity>
       </View>
