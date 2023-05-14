@@ -3,6 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { AuthContext } from "../context/AuthContext";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase/config";
+import Header from "../components/Header";
 
 const Home = ({ navigation }) => {
   const { authUser } = useContext(AuthContext);
@@ -14,19 +15,13 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text>This is Home Screen</Text>
-      {authUser ? <Text>Welcome</Text> : <Text>No user</Text>}
-      <TouchableOpacity onPress={handleLogout}>
-        <Text>Logout</Text>
-      </TouchableOpacity>
+      <Header />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 24,
-  },
+  container: {},
 });
 
 export default Home;
