@@ -1,12 +1,12 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
-export default function Todo() {
+export default function Todo({ title, time, onDelete }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.todoText}>Learn React Native</Text>
+      <Text style={styles.todoText}>{title}</Text>
       <Text style={styles.date}>{new Date(Date.now()).toDateString()}</Text>
-      <TouchableOpacity style={styles.trash}>
+      <TouchableOpacity style={styles.trash} onPress={onDelete}>
         <AntDesign name="delete" size={24} color="black" />
       </TouchableOpacity>
     </View>
@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     elevation: 5,
     position: "relative",
+    marginVertical: 10,
   },
   todoText: {
     fontWeight: "bold",
